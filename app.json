@@ -6,11 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android", "web"],
     "newArchEnabled": true,
+    "scheme": "mymovies",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -22,6 +20,7 @@
     },
     "android": {
       "package": "com.mymovies.main",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -29,9 +28,13 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
+      [
+        "@react-native-google-signin/google-signin"
+      ],
       "expo-web-browser"
     ],
     "extra": {
