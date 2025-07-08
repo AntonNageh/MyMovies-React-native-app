@@ -4,8 +4,7 @@ import {
   getDoc, 
   setDoc, 
   updateDoc, 
-  arrayUnion, 
-  arrayRemove 
+  arrayUnion,  
 } from 'firebase/firestore';
 import { db } from '../firebase'; 
 

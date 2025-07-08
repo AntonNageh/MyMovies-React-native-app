@@ -20,17 +20,18 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   // Create proper redirect URI
-  const redirectUri = AuthSession.makeRedirectUri({
-    scheme: 'mymovies',
-    useProxy: true,
-  });
+  // const redirectUri = AuthSession.makeRedirectUri({
+  //   useProxy: true,
+  //   path: 'redirect',
+  // });
+  const redirectUri = 'https://auth.expo.io/@anton31/mymovies';
 
   console.log('Redirect URI:', redirectUri); // Debug log
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     webClientId: '949011087583-7lkeig0lkbirjl79uq7tl5el63v9g0p6.apps.googleusercontent.com',
     iosClientId: 'your-ios-client-id.googleusercontent.com', // Replace with actual iOS client ID
-    androidClientId: '949011087583-cce792pjp0nnocjc5761995trhesfs1s.apps.googleusercontent.com',
+    androidClientId: '949011087583-f9opafdrl59bro98ablodl5di704tkkt.apps.googleusercontent.com',
     redirectUri,
     scopes: ['profile', 'email', 'openid'], // Add 'openid' scope
     additionalParameters: {
@@ -131,6 +132,8 @@ export const useAuth = () => {
   };
 
   const signInWithGoogle = async () => {
+      console.log('Redirect URI:', redirectUri); // Debug log
+
     try {
       console.log('Starting Google sign-in...');
       
@@ -168,20 +171,27 @@ export const useAuth = () => {
       console.error('Logout Error:', error);
     }
   };
+
 const signUpWithGoogle = async () => {
+    console.log('Redirect URI:', redirectUri); // Debug log
   try {
     const result = await promptAsync();
     if (result.type === 'success') {
       const { id_token, access_token } = result.params;
       const credential = GoogleAuthProvider.credential(id_token, access_token);
-      const userCredential = await createUserWithEmailAndPassword(auth, credential);
+      
+      const userCredential = await signInWithCredential(auth, credential);
+      
+      // Create user document if this is a new user
       await createUserDocument(userCredential.user);
       console.log('Google sign-up successful:', userCredential.user);
+
     } else {
       console.error('Google sign-up error:', result.error);
     }
   } catch (error) {
     console.error('Google sign-up error:', error);
+    throw error; // Re-throw so handleGoogleSignUp can catch it
   }
 };
   return {

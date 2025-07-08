@@ -5,8 +5,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { auth } from '../firebase';
 import { createUserDocument } from '../services/userService';
 
-export const LoginScreen = ({ navigation }) => {
-  const { signInWithGoogle } = useAuth();
+export const LoginScreen = () => {
+  const { signInWithGoogle, signUpWithGoogle } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,6 +15,14 @@ export const LoginScreen = ({ navigation }) => {
       await signInWithGoogle();
     } catch (error) {
       Alert.alert('Google Sign-In Error', error.message);
+    }
+  };
+  const handleGoogleSignUp = async () => {
+    console.log('Google sign-up button pressed!'); 
+    try {
+      await signUpWithGoogle();
+    } catch (error) {
+      Alert.alert('Google Sign-up Error', error.message);
     }
   };
 
@@ -79,6 +87,9 @@ export const LoginScreen = ({ navigation }) => {
 
           <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={handleGoogleSignIn}>
             <Text style={styles.buttonText}>Sign in with Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={handleGoogleSignUp}>
+            <Text style={styles.buttonText}>Sign Up with Google</Text>
           </TouchableOpacity>
         </View>
       </View>

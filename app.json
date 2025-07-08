@@ -1,29 +1,28 @@
 {
   "expo": {
-    "name": "mymovies",
+    "name": "myMovies",
     "slug": "mymovies",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "platforms": ["ios", "android", "web"],
     "newArchEnabled": true,
     "scheme": "mymovies",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/landingPage.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "black"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mymoviesapp.main"
     },
     "android": {
-      "package": "com.mymovies.main",
+      "package": "com.mymoviesapp.main",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "black"
       },
       "edgeToEdgeEnabled": true
     },

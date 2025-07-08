@@ -47,7 +47,8 @@ export const FavoritesProvider = ({ children }) => {
     try {
       const success = await favoritesService.addToFavorites(user.uid, movie);
       if (success) {
-        await loadFavorites(); // Refresh favorites list
+        // Refresh favorites list
+        await loadFavorites(); 
         return true;
       }
       return false;

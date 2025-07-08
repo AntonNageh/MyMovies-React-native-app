@@ -118,36 +118,37 @@ export function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0a0a0a" />
-      
       {/* Header */}
-      <LinearGradient
-        colors={['#0a0a0a', '#1a1a1a']}
-        style={styles.header}
-      >
+      <LinearGradient colors={["#0a0a0a", "#1a1a1a"]} style={styles.header}>
         <View style={styles.headerContent}>
           <View>
-            <Text style={styles.greeting}>Hello {user?.name || 'Movie Lover'}! 👋</Text>
+            <Text style={styles.greeting}>
+              Hello {user?.displayName || "Movie Lover"}!{" "}
+            </Text>
             <Text style={styles.subtitle}>What would you like to watch?</Text>
           </View>
           <View style={styles.headerActions}>
             <TouchableOpacity
               style={styles.favoritesButton}
-              onPress={() => navigation.navigate('FavoritesScreen')}
+              onPress={() => navigation.navigate("FavoritesScreen")}
             >
               <Text style={styles.favoritesButtonText}>❤️</Text>
               {user && getFavoritesCount() > 0 && (
                 <View style={styles.favoritesCount}>
-                  <Text style={styles.favoritesCountText}>{getFavoritesCount()}</Text>
+                  <Text style={styles.favoritesCountText}>
+                    {getFavoritesCount()}
+                  </Text>
                 </View>
               )}
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.profileButton}
-              onPress={() => { user ? auth.logout() : navigation.navigate('Auth') }}
+              onPress={() => {
+                user ? auth.logout() : navigation.navigate("Auth");
+              }}
             >
               <Text style={styles.profileButtonText}>
-                {user ? 'Logout' : 'Login'}
+                {user ? "Logout" : "Login"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -160,31 +161,32 @@ export function HomeScreen({ navigation }) {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>🔥 Trending This Week</Text>
           </View>
-          <FlatList
-            data={trendingMovies}
-            renderItem={renderTrendingMovie}
-            keyExtractor={item => `trending-${item.id}`}
+          <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.trendingList}
-          />
+          >
+            {trendingMovies.map((movie, index) => (
+              <View key={`trending-${movie.id}`}>
+                {renderTrendingMovie({ item: movie, index })}
+              </View>
+            ))}
+          </ScrollView>
         </View>
 
         {/* Popular Movies Section */}
-        <View style={styles.section}>
+        <ScrollView style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>🎬 Popular Movies</Text>
           </View>
-          <FlatList
-            data={movies}
-            renderItem={renderPopularMovie}
-            keyExtractor={item => `popular-${item.id}`}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.popularGrid}
-            columnWrapperStyle={styles.popularRow}
-          />
-        </View>
+          <View style={styles.popularGrid}>
+            {movies.map((movie, index) => (
+              <View key={`popular-${movie.id}`} style={styles.movieItem}>
+                {renderPopularMovie({ item: movie, index })}
+              </View>
+            ))}
+          </View>
+        </ScrollView>
       </ScrollView>
     </View>
   );
@@ -334,9 +336,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  popularGrid: {
-    paddingHorizontal: 15,
-    paddingBottom: 20,
+  // popularGrid: {
+  //   paddingHorizontal: 15,
+  //   paddingBottom: 20,
+  // },
+    popularGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 8,
+    paddingVertical: 16,
+    justifyContent: 'space-between',
   },
   popularRow: {
     justifyContent: 'space-between',
